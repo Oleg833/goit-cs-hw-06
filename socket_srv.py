@@ -19,12 +19,6 @@ logging.basicConfig(
 # Флаг для зупинки сервера
 server_running = True
 
-ENV_PATH = Path(__file__).parent / ".env"
-
-load_dotenv(ENV_PATH)
-
-PORT2 = int(os.getenv("PORT2"))
-
 
 def handle_client(connection, address):
     print(f"Підключення з {address} встановлено")
@@ -38,7 +32,9 @@ def handle_client(connection, address):
             parsed_data = urllib.parse.parse_qs(data)
             # Видалити \r\n з значення ключа 'message'
             if "message" in parsed_data:
-                parsed_data["message"] = [parsed_data["message"][0].strip()]
+                parsed_data["message"] = [
+                    parsed_data["message"][0].strip().replace("\r\n", " ")
+                ]
             username = parsed_data.get("username", [""])[0]
             message = parsed_data.get("message", [""])[0]
             # print(f"Received data: username={username}, message={message}")
@@ -83,4 +79,10 @@ def socket_server(port):
 
 
 if __name__ == "__main__":
+
+    ENV_PATH = Path(__file__).parent / ".env"
+
+    load_dotenv(ENV_PATH)
+
+    PORT2 = int(os.getenv("PORT2"))
     socket_server(PORT2)
