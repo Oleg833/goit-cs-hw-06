@@ -79,7 +79,6 @@ def run_server(port):
         print(f"Starting server on port {port}...")
         httpd.serve_forever()
     except KeyboardInterrupt:
-        # Зупинка сервера при натисканні Ctrl+C
         logging.error("Server stoping...")
         httpd.shutdown()
 
@@ -90,7 +89,6 @@ def stop_servers(signum, frame):
     server_running = False
 
 
-# Додамо обробник для сигналу завершення роботи (CTRL+C)
 signal.signal(signal.SIGINT, stop_servers)
 
 
@@ -104,5 +102,4 @@ if __name__ == "__main__":
     web_thread.daemon = True  # Позначаємо потік як демон, щоб він завершився при завершенні основного потоку
     web_thread.start()
 
-    # Запускаємо сокет-сервер у головному потоці
     socket_server(PORT2)

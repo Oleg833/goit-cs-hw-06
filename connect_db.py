@@ -11,11 +11,11 @@ ENV_PATH = Path(__file__).parent / ".env"
 def create_connect() -> MongoClient:
     load_dotenv(ENV_PATH)
     # Підключення до MongoDB з аутентифікацією
-    client = MongoClient("mongodb://admin:122t24@localhost:27017/")
-    # client = MongoClient(
-    #     os.getenv("MONGO_DB_HOST"),
-    #     server_api=ServerApi("1"),
-    # )
+    # client = MongoClient("mongodb://mongodb:27017/mydatabase")
+    client = MongoClient(
+        os.getenv("MONGO_DB_HOST"),
+        server_api=ServerApi("1"),
+    )
 
     return client
 
