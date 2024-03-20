@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  webapp:
+    build: .
+    ports:
+      - "3000:3000" # Відображення порту веб-сервера
+      - "5001:5001" # Відображення порту Socket-сервера
+    environment:
+      PORT: 3000
+      PORT2: 5001

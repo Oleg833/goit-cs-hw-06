@@ -9,24 +9,17 @@ import logging
 from datetime import datetime
 from dotenv import load_dotenv
 from connect_db import create_connect
-
 from socket_srv import socket_server
 
-server_running = True
 WEB_DIR = "./front-init"
+
+server_running = True
 
 logging.basicConfig(
     filename="server.log",
     level=logging.ERROR,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
-
-ENV_PATH = Path(__file__).parent / ".env"
-
-load_dotenv(ENV_PATH)
-
-PORT = int(os.getenv("PORT"))
-PORT2 = int(os.getenv("PORT2"))
 
 
 class RequestHandler(BaseHTTPRequestHandler):
@@ -101,7 +94,11 @@ signal.signal(signal.SIGINT, stop_servers)
 
 
 if __name__ == "__main__":
-    # Запускаємо веб-сервер у окремому потоці
+    ENV_PATH = Path(__file__).parent / ".env"
+    load_dotenv(ENV_PATH)
+
+    PORT = int(os.getenv("PORT"))
+    PORT2 = int(os.getenv("PORT2"))
     web_thread = threading.Thread(target=run_server, args=(PORT,))
     web_thread.daemon = True  # Позначаємо потік як демон, щоб він завершився при завершенні основного потоку
     web_thread.start()
