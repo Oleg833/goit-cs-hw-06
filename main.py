@@ -8,7 +8,8 @@ import threading
 import logging
 from datetime import datetime
 from dotenv import load_dotenv
-from connect_db import create_connect
+
+
 from socket_srv import socket_server
 
 WEB_DIR = "./front-init"

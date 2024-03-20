@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  webapp:
+    build: .
+    ports:
+      - "3000:3000" # Відображення порту веб-сервера
+      - "5000:5000" # Відображення порту Socket-сервера
+    env_file:
+      - ./.env
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-instance
+    ports:
+      - "27017:27017" # Відображення порту MongoDB
+    volumes:
+      - mongodb_data:/data/db
+    command: 
+      - mongod
+      - --bind_ip_all
+      - "&&"
+      - mongo
+      - mydatabase
+      - --eval
+      - "db.messages.insert([{ 'date': '2024-03-22T12:00:00Z', 'username': 'John Doe', 'message': 'message from John Doe' }, { 'date': '2024-03-22T12:00:00Z', 'username': 'Jane Smith', 'message': 'message from Jane Smith' }])"
+
+volumes:
+  mongodb_data:

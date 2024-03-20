@@ -1,9 +1,17 @@
-version: '3.8'
+version: '3.7'
+
 services:
-  webapp:
-    build: .
+  mongodb:
+    container_name: mongodb-instance
+    image: mongo:latest
+    restart: always
     ports:
-      - "3000:3000" # Відображення порту веб-сервера
-      - "5000:5000" # Відображення порту Socket-сервера
-    env_file:
-      - ./.env
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
