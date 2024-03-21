@@ -12,6 +12,7 @@ def create_connect() -> MongoClient:
     load_dotenv(ENV_PATH)
     # Підключення до MongoDB з аутентифікацією
     # client = MongoClient("mongodb://mongodb:27017/mydatabase")
+    # client = MongoClient("mongodb://localhost:27017/")
     client = MongoClient(
         os.getenv("MONGO_DB_HOST"),
         server_api=ServerApi("1"),
@@ -21,7 +22,7 @@ def create_connect() -> MongoClient:
 
 
 if __name__ == "__main__":
-    client = create_connect()
+    client = MongoClient("mongodb://localhost:27017/")
     db = client["db-messages"]
     collection = db["messages"]
     cats = collection.find()

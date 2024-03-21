@@ -1,33 +1,39 @@
 from pymongo import MongoClient
 from datetime import datetime
 
+import pymongo
+
 
 def initialize_database():
-    # Підключення до MongoDB
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["db-messages"]
-    users_collection = db["messages"]
+    try:
+        client = MongoClient("mongodb://localhost:27017/")
+        db = client["db-messages"]
+        users_collection = db["messages"]
 
-    print("Database initialized successfully!")
+        init_post = [
+            {
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "username": "John Doe",
+                "message": "message from John Doe",
+            },
+            {
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "username": "Jane Smith",
+                "message": "message from Jane Smith",
+            },
+        ]
 
-    # Ініціалізація даних
-    init_post = [
-        {
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "username": "John Doe",
-            "message": "message from John Doe",
-        },
-        {
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "username": "Jane Smith",
-            "message": "message from Jane Smith",
-        },
-    ]
-
-    # Вставка даних до колекції
-    users_collection.insert_many(init_post)
+        users_collection.insert_many(init_post)
+        print("Database initialized successfully!")
+    except pymongo.errors.PyMongoError as e:
+        print(f"An error occurred: {e}")
+    return client
 
 
 if __name__ == "__main__":
-    # Виклик функції для ініціалізації бази даних
-    initialize_database()
+    client = initialize_database()
+    db = client["db-messages"]
+    collection = db["messages"]
+    cats = collection.find()
+    for cat in cats:
+        print(cat)
