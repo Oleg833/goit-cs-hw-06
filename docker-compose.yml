@@ -17,8 +17,8 @@ services:
     environment:
       - MONGO_URI=mongodb://mongodb:27017/mydatabase
     ports:
-      - "3000:3000" # Відображення порту веб-сервера
-      - "5000:5000" # Відображення порту Socket-сервера
+      - "${HTTP_SERVER_PORT}:3000" # Відображення порту веб-сервера
+      - "${SOCKET_SERVER_PORT}:5000" # Відображення порту Socket-сервера
     env_file:
       - ./.env
 volumes:

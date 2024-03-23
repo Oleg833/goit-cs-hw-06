@@ -2,11 +2,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 from pathlib import Path
 import signal
-import urllib.parse
 import socket
 import threading
 import logging
-from datetime import datetime
 from dotenv import load_dotenv
 
 
@@ -96,8 +94,8 @@ if __name__ == "__main__":
     ENV_PATH = Path(__file__).parent / ".env"
     load_dotenv(ENV_PATH)
 
-    PORT = int(os.getenv("PORT"))
-    PORT2 = int(os.getenv("PORT2"))
+    PORT = int(os.getenv("HTTP_SERVER_PORT"))
+    PORT2 = int(os.getenv("SOCKET_SERVER_PORT"))
     web_thread = threading.Thread(target=run_server, args=(PORT,))
     web_thread.daemon = True  # Позначаємо потік як демон, щоб він завершився при завершенні основного потоку
     web_thread.start()

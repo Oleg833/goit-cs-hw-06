@@ -78,5 +78,5 @@ if __name__ == "__main__":
 
     load_dotenv(ENV_PATH)
 
-    PORT2 = int(os.getenv("PORT2"))
+    PORT2 = int(os.getenv("SOCKET_SERVER_PORT"))
     socket_server(PORT2)
