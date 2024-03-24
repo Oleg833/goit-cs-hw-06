@@ -8,7 +8,7 @@ import logging
 from dotenv import load_dotenv
 
 
-from socket_srv import socket_server
+from socket_srv2 import socket_server
 
 WEB_DIR = "./front-init"
 
